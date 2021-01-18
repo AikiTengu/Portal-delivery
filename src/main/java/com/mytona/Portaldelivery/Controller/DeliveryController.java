@@ -1,20 +1,37 @@
 package com.mytona.Portaldelivery.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.mytona.Portaldelivery.Model.DAO.DeliveryDAO;
+import com.mytona.Portaldelivery.Model.Entity.Delivery;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Path;
+import java.util.List;
 
-//TODO: CRU deliveries
 
 @RestController
 @RequestMapping("/delivery")
 public class DeliveryController {
 
+    @Autowired
+    private DeliveryDAO deliveryDAO;
+
     @GetMapping("/{deliveryId}")
-    public String getDelivery(@PathVariable("deliveryId") String deliveryId) {
-        return "Successfully retrieved delivery:" + " " + deliveryId;
+    public Delivery get(@PathVariable("deliveryId") long deliveryId) {
+        return deliveryDAO.findDelivery(deliveryId);
+    }
+
+    @GetMapping("/all")
+    public List<Delivery> getAll(){
+        return deliveryDAO.findAll();
+    }
+
+    @PostMapping
+    public Delivery save(@RequestBody Delivery customer){
+        return deliveryDAO.save(customer);
+    }
+
+    @DeleteMapping("/{deliveryId}")
+    public String remove(@PathVariable("deliveryId") long deliveryId){
+        return deliveryDAO.deleteDelivery(deliveryId);
     }
 }
