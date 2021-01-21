@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/delivery")
+@RequestMapping("/deliveries")
 public class DeliveryController {
 
     @Autowired
